@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-// import Form from './components/Form';
-import FormWithItems from './components/FormWithItems';
+import Form from './components/Form';
+// import FormWithItems from './components/FormWithItems';
 import './App.css';
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <FormWithItems />
+        <Form />
       </div>
     );
   }
