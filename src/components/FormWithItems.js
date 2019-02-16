@@ -7,7 +7,7 @@ const initialState = JSON.parse(
       {
         name: 'userName',
         label: '姓名',
-        value: undefined
+        value: undefined //如果給''會沒辦法輸入 (因為單向流)
       },
       {
         name: 'phone',
