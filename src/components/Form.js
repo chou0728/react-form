@@ -68,7 +68,7 @@ class Form extends Component {
         </div>
         <div className="form-item">
           <label>地址</label>
-          <input type="text" className="form-item__input" name="address" value={userName} onChange={this.formItmeUpdate} />
+          <input type="text" className="form-item__input" name="address" value={address} onChange={this.formItmeUpdate} />
         </div>
         <div className="form-item">
           <input type="submit" value="Submit" className="form-item__submit" height="60" />
