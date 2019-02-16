@@ -1,31 +1,34 @@
 import React, { Component } from 'react';
 import FormItem from '../components/FormItem';
-import Logo from '../assets/logo.png';
 
+const initialState = JSON.parse(
+  JSON.stringify({
+    formData: [
+      {
+        name: 'userName',
+        label: '姓名',
+        value: undefined
+      },
+      {
+        name: 'phone',
+        label: '電話',
+        value: undefined
+      },
+      {
+        name: 'address',
+        label: '住址',
+        value: undefined
+      }
+    ],
+    userName: '',
+    phone: '',
+    address: ''
+  })
+);
 class Form extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      formData: [
-        {
-          name: 'userName',
-          label: '姓名'
-        },
-        {
-          name: 'phone',
-          label: '電話'
-        },
-        {
-          name: 'address',
-          label: '住址'
-        }
-      ],
-      userName: '',
-      phone: '',
-      address: '',
-      emptyValue: ''
-    };
+    this.state = initialState;
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.formItmeUpdate = this.formItmeUpdate.bind(this);
@@ -34,7 +37,7 @@ class Form extends Component {
   handleSubmit(event) {
     const { userName, phone, address, formData } = this.state;
     event.preventDefault();
-    this.setState({ userName: '', phone: '', address: '' });
+    this.setState({ ...initialState });
     this.setState(() => {
       return formData.map(item => (item.value = ''));
     });
@@ -42,21 +45,6 @@ class Form extends Component {
   }
 
   formItmeUpdate(event) {
-    // const { formData } = this.state;
-    // const targetName = event.target.name;
-    // const targetValue = event.target.value;
-    // const currentItem = formData.find(item => item.name === targetName);
-    // currentItem.value = targetValue;
-    // const newFormData = formData.filter(item => item.name !== targetName);
-    // newFormData.push(currentItem);
-    // this.setState({ newFormData });
-    // console.log(newFormData);
-    // this.setState(state => {
-    //   const [first, ...rest] = state.formData;
-    //   return {
-    //     formData: rest
-    //   };
-    // });
     const targetName = event.target.name;
     const targetValue = event.target.value;
     this.setState({
@@ -68,23 +56,19 @@ class Form extends Component {
     const { formData, userName, phone, address } = this.state;
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h1>React Form</h1>
-        <img src={Logo} alt="react-logo" />
-
+      <div className="example-form">
         {formData.map((formItem, index) => (
           <FormItem key={index} {...formItem} handleChange={this.formItmeUpdate} />
         ))}
-
-        <div className="form-item">
-          <input type="submit" value="Submit" className="form-item__submit" height="60" />
-        </div>
+        <button className="form-item__submit" onClick={this.handleSubmit}>
+          Submit
+        </button>
         <div className="show-area">
-          姓名: {userName} <br />
-          電話: {phone} <br />
-          地址: {address} <br />
+          <p>姓名: {userName}</p>
+          <p>電話: {phone}</p>
+          <p>地址: {address}</p>
         </div>
-      </form>
+      </div>
     );
   }
 }
