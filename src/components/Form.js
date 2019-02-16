@@ -2,36 +2,15 @@ import React, { Component } from 'react';
 // import FormItem from '../components/FormItem';
 import Logo from '../assets/logo.png';
 
+const INITIAL_STATE = {
+  userName: '',
+  phone: '',
+  address: ''
+};
 class Form extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      formData: [
-        {
-          name: 'userName',
-          value: '',
-          label: '姓名',
-          index: 0
-        },
-        {
-          name: 'phone',
-          value: '',
-          label: '電話',
-          index: 1
-        },
-        {
-          name: 'address',
-          value: '',
-          label: '住址',
-          index: 2
-        }
-      ],
-      userName: '',
-      phone: '',
-      address: ''
-    };
-
+    this.state = INITIAL_STATE;
     this.handleSubmit = this.handleSubmit.bind(this);
     this.formItmeUpdate = this.formItmeUpdate.bind(this);
   }
@@ -39,7 +18,7 @@ class Form extends Component {
   handleSubmit(event) {
     const { userName, phone, address } = this.state;
     event.preventDefault();
-    this.setState({ userName: '', phone: '', address: '' });
+    this.setState({ ...INITIAL_STATE });
     alert(`您的表單已送出: 姓名:${userName} 電話:${phone} 住址:${address}`);
   }
 
