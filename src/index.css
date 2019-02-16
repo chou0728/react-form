@@ -12,3 +12,43 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.form-item {
+  display: flex;
+  justify-content: space-between;
+  width: 600px;
+  padding: 20px 0;
+  margin: 0 auto;
+}
+
+.form-item__input {
+  width: 500px;
+  height: 30px;
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 5px 20px;
+}
+
+
+label {
+  text-align: left;
+  padding-right: 20px;
+  line-height: 44px;
+}
+
+.form-item__submit {
+  display: block;
+  margin: 0 auto;
+  width: 200px;
+  height: 40px;
+  -webkit-appearance: none;
+}
+
+.show-area {
+  text-align: left;
+  width: 500px;
+  height: 200px;
+  margin: 20px auto;
+  padding: 50px;
+  border: 2px solid #eee;
+}
