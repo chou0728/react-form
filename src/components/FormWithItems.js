@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FormItem from '../components/FormItem';
+import FormItem from './FormItem';
 
 const initialState = JSON.parse(
   JSON.stringify({
@@ -7,22 +7,19 @@ const initialState = JSON.parse(
       {
         name: 'userName',
         label: '姓名',
-        value: undefined //如果給''會沒辦法輸入 (因為單向流)
+        value: ''
       },
       {
         name: 'phone',
         label: '電話',
-        value: undefined
+        value: ''
       },
       {
         name: 'address',
         label: '住址',
-        value: undefined
+        value: ''
       }
-    ],
-    userName: '',
-    phone: '',
-    address: ''
+    ]
   })
 );
 class Form extends Component {
@@ -35,38 +32,50 @@ class Form extends Component {
   }
 
   handleSubmit(event) {
-    const { userName, phone, address, formData } = this.state;
+    const { formData } = this.state;
     event.preventDefault();
     this.setState({ ...initialState });
     this.setState(() => {
       return formData.map(item => (item.value = ''));
     });
-    alert(`您的表單已送出: 姓名:${userName} 電話:${phone} 住址:${address}`);
+    alert(`您的表單已送出!`);
   }
 
-  formItmeUpdate(event) {
-    const targetName = event.target.name;
+  formItmeUpdate(event, index) {
+    const { formData } = this.state;
     const targetValue = event.target.value;
     this.setState({
-      [targetName]: targetValue
+      formData: formData.map((item, mapIndex) => {
+        if (index === mapIndex) {
+          return {
+            ...item,
+            value: targetValue
+          };
+        } else {
+          return item;
+        }
+      })
     });
   }
 
   render() {
-    const { formData, userName, phone, address } = this.state;
+    const { formData } = this.state;
 
     return (
       <div className="example-form">
         {formData.map((formItem, index) => (
-          <FormItem key={index} {...formItem} handleChange={this.formItmeUpdate} />
+          <FormItem key={index} {...formItem} handleChange={event => this.formItmeUpdate(event, index)} />
         ))}
         <button className="form-item__submit" onClick={this.handleSubmit}>
           Submit
         </button>
         <div className="show-area">
-          <p>姓名: {userName}</p>
-          <p>電話: {phone}</p>
-          <p>地址: {address}</p>
+          {formData.map((formItem, index) => (
+            <p key={index}>
+              {formItem.label}
+              {formItem.value}
+            </p>
+          ))}
         </div>
       </div>
     );

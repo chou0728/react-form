@@ -1,7 +1,26 @@
 import React, { Component } from 'react';
+import FormItem from './FormItem';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 const initialState = JSON.parse(
   JSON.stringify({
+    formData: [
+      {
+        name: 'userName',
+        label: '姓名',
+        value: undefined //如果給''會沒辦法輸入 (因為單向流)
+      },
+      {
+        name: 'phone',
+        label: '電話',
+        value: undefined
+      },
+      {
+        name: 'address',
+        label: '住址',
+        value: undefined
+      }
+    ],
     userName: '',
     phone: '',
     address: ''
@@ -17,10 +36,13 @@ class Form extends Component {
   }
 
   handleSubmit(event) {
-    const { userName, phone, address } = this.state;
+    const { userName, phone, address, formData } = this.state;
     event.preventDefault();
-    alert(`您的表單已送出: 姓名:${userName} 電話:${phone} 住址:${address}`);
     this.setState({ ...initialState });
+    this.setState(() => {
+      return formData.map(item => (item.value = ''));
+    });
+    alert(`您的表單已送出: 姓名:${userName} 電話:${phone} 住址:${address}`);
   }
 
   formItmeUpdate(event) {
@@ -32,22 +54,13 @@ class Form extends Component {
   }
 
   render() {
-    const { userName, phone, address } = this.state;
+    const { formData, userName, phone, address } = this.state;
 
     return (
       <div className="example-form">
-        <div className="form-item">
-          <label>姓名:</label>
-          <input type="text" className="form-item__input" name="userName" value={userName} onChange={this.formItmeUpdate} />
-        </div>
-        <div className="form-item">
-          <label>電話:</label>
-          <input type="text" className="form-item__input" name="phone" value={phone} onChange={this.formItmeUpdate} />
-        </div>
-        <div className="form-item">
-          <label>地址:</label>
-          <input type="text" className="form-item__input" name="address" value={address} onChange={this.formItmeUpdate} />
-        </div>
+        {formData.map((formItem, index) => (
+          <FormItem key={index} {...formItem} handleChange={this.formItmeUpdate} />
+        ))}
         <button className="form-item__submit" onClick={this.handleSubmit}>
           Submit
         </button>
